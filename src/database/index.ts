@@ -11,13 +11,3 @@ const client = createClient({
 });
 
 export const db = drizzle(client, { schema });
-
-export const redisClient = new Redis({
-	host: getEnvVariable("REDIS_HOST"),
-	port: parseInt(getEnvVariable("REDIS_PORT")),
-	password: getEnvVariable("REDIS_PASSWORD"),
-	db: parseInt(getEnvVariable("REDIS_DB", "8")),
-});
-redisClient.on("error", (err) => {
-	console.error("[REDIS ERROR]", err);
-});

@@ -7,12 +7,13 @@ import { ErrorHanlder, parseStackTrace } from "../utils/errors/helper";
 import { LogService } from "./log/log.service";
 import { db } from "./database";
 import { LogController } from "./log/log.controller";
+import { initializeRedisClient } from "./database/redis";
+import { GatewayController } from "./gateway/gateway.controller";
 const allowedOrigins = getEnvVariable("ALLOWED_ORIGINS", "").split(",");
 const timeZone = getEnvVariable("TZ", "Asia/Jakarta");
 
 const app = new Elysia()
 	.decorate("db", db)
-
 	.get("/", () => "Hello Elysia")
 	.use(
 		swagger({
@@ -108,3 +109,5 @@ const app = new Elysia()
 console.log(
 	`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`,
 );
+
+initializeRedisClient();
