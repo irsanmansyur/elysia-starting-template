@@ -1,10 +1,14 @@
 export class HttpException extends Error {
 	stack?: string | undefined;
+	saveLog = true;
 	constructor(
 		public message: string,
 		public status?: number,
+		public metadata?: object,
+		saveLog?: boolean,
 	) {
 		super(message);
+		if (saveLog !== undefined) this.saveLog = saveLog;
 		// Menghapus baris stack trace yang terkait dengan HttpException
 		if (Error.captureStackTrace) {
 			Error.captureStackTrace(this, HttpException);

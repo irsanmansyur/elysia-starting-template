@@ -1,5 +1,5 @@
-import { LogService } from "../../src/log/log.service";
 import { getEnvVariable } from "../configs/variable";
+import { eventEmitter } from "../event/plugin";
 
 export const parseStackTrace = (stack: string = "") => {
 	const stackLines = stack.trim().split("\n");
@@ -57,7 +57,11 @@ export abstract class ErrorHanlder {
 			);
 
 			const msgs = parsedError.message || "Validation failed";
-			LogService.create("warning", msgs, formattedErrors);
+			eventEmitter.emit("create.log", {
+				level: "warn",
+				message: msgs,
+				meta: formattedErrors,
+			});
 
 			return {
 				message: msgs,

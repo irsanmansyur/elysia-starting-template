@@ -1,0 +1,21 @@
+services:
+  elysia_template:
+    container_name: elysia_template
+    image: balance:latest
+    build: .
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - '127.0.0.1:3601:3000'
+
+    networks:
+      wg-easy-net:
+        ipv4_address: 172.25.0.101
+
+networks:
+  wg-easy-net:
+    external: true

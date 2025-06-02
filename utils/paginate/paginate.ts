@@ -1,5 +1,5 @@
 import { or, ilike, between, gte, lte } from "drizzle-orm";
-import { SQLiteColumn } from "drizzle-orm/sqlite-core";
+import { PgColumn } from "drizzle-orm/pg-core";
 
 export const paginate = ({
 	page = 1,
@@ -25,7 +25,7 @@ export function generateMeta(count: number, page: number, limit: number) {
  * @param attributes - Daftar kolom yang akan dicari berdasarkan `q`.
  * @returns Kondisi `WHERE` untuk digunakan di Drizzle ORM.
  */
-export function searchCondition(q?: string, attributes?: SQLiteColumn[]) {
+export function searchCondition(q?: string, attributes?: PgColumn[]) {
 	if (!q || !attributes || attributes.length === 0) {
 		return undefined; // Jika tidak ada pencarian, return undefined
 	}
@@ -40,7 +40,7 @@ export function searchCondition(q?: string, attributes?: SQLiteColumn[]) {
  * @param attributes - Daftar kolom yang akan dicari berdasarkan `q`.
  */
 export const whereDateFilter = (
-	attribute: SQLiteColumn,
+	attribute: PgColumn,
 	{
 		dateEnd,
 		dateStart,
