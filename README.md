@@ -23,7 +23,7 @@ A modern, high-performance API gateway built with Elysia.js, TypeScript, and Bun
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/irsanmansyur/elysia-starting-template.git
 cd elysia-starting-template
 ```
 
