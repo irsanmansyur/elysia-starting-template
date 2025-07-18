@@ -16,5 +16,26 @@ declare namespace APP {
 		errors: ValidationError[]; // Daftar error yang terdeteksi
 	};
 
-	type LogLevel = "info" | "warning" | "error";
+	type LogLevel = 'info' | 'warning' | 'error';
+
+	namespace LOG {
+		type Level = 'info' | 'warn' | 'error' | 'debug' | 'trace';
+		type Incoming = {
+			external: boolean;
+			message?: string;
+		};
+
+		type Create = {
+			level: Level;
+			message: string;
+			stack?: Record<string, any>;
+		};
+
+		type ExPayload = {
+			service: string;
+			message: string;
+			level: Level;
+			meta?: Record<string, any>;
+		};
+	}
 }
