@@ -1,7 +1,7 @@
 import { Elysia } from 'elysia';
 import { EventEmitter } from 'events';
-import { fetchWithTimeout } from '../../helpers/helper';
-import { Config } from '../../configs/variable';
+import { Config } from '../../configs';
+import { fetchWithTimeout } from '~/utils/helpers/fetch';
 
 export const eventEmitter = new EventEmitter();
 eventEmitter.on('logger.create-external', async ({ message, level, stack }: APP.LOG.Create) => {

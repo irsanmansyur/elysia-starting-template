@@ -1,52 +1,40 @@
-# Elysia Starting Template
+# Template Awal Elysia
 
-A modern, high-performance API gateway built with Elysia.js, TypeScript, and Bun runtime. Features PostgreSQL integration with Drizzle ORM, Redis caching, comprehensive logging system, and Docker deployment.
+Template modern untuk API Gateway yang dibangun menggunakan Elysia.js, TypeScript, dan runtime Bun. Template ini dilengkapi dengan integrasi PostgreSQL menggunakan Drizzle ORM, caching Redis, sistem logging yang komprehensif, dan dukungan untuk deployment menggunakan Docker.
 
-## 🚀 Tech Stack
+## 🚀 Teknologi yang Digunakan
 
-- **Runtime**: [Bun](https://bun.sh/) - Fast JavaScript runtime
-- **Framework**: [Elysia.js](https://elysiajs.com/) - Fast and friendly Bun web framework
-- **Database**: [PostgreSQL](https://postgresql.org/) - Robust relational database
-- **ORM**: [Drizzle ORM](https://orm.drizzle.team/) - TypeScript ORM
-- **Cache**: [Redis](https://redis.io/) - In-memory data structure store
-- **Language**: [TypeScript](https://typescriptlang.org/) - Type-safe JavaScript
-- **Containerization**: [Docker](https://docker.com/) - Application containerization
+- **Runtime**: [Bun](https://bun.sh/) - Runtime JavaScript yang cepat
+- **Framework**: [Elysia.js](https://elysiajs.com/) - Framework web untuk Bun yang cepat dan ramah pengguna
+- **Database**: [PostgreSQL](https://postgresql.org/) - Database relasional yang andal
+- **ORM**: [Drizzle ORM](https://orm.drizzle.team/) - ORM berbasis TypeScript
+- **Cache**: [Redis](https://redis.io/) - Penyimpanan struktur data dalam memori
+- **Bahasa**: [TypeScript](https://typescriptlang.org/) - JavaScript dengan tipe yang aman
+- **Containerisasi**: [Docker](https://docker.com/) - Containerisasi aplikasi
 
-## 📋 Prerequisites
+## 📋 Prasyarat
 
 - [Bun](https://bun.sh/) >= 1.2.15
 - [PostgreSQL](https://postgresql.org/) >= 12
 - [Redis](https://redis.io/) >= 6
-- [Docker](https://docker.com/) (optional, for containerized deployment)
+- [Docker](https://docker.com/) (opsional, untuk deployment container)
 
-## 🛠 Installation
+## 🛠 Instalasi
 
-1. Clone the repository:
+1. Clone repositori:
 ```bash
 git clone https://github.com/irsanmansyur/elysia-starting-template.git
 cd elysia-starting-template
-```
-
-2. Install dependencies:
-```bash
 bun install
-```
-
-3. Set up environment variables:
-```bash
 cp .env.example .env
-# Edit .env with your configuration
 ```
-
-## ⚙️ Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# PostgreSQL Configuration
+2. ⚙️ Variabel Lingkungan
+	 - Buat file `.env` di direktori root dengan variabel berikut:
+```dotenv
+# Konfigurasi PostgreSQL
 POSTGRES_URL=postgres://username:password@host:port/database
 
-# Redis Configuration
+# Konfigurasi Redis
 REDIS_HOST=localhost
 REDIS_PORT=6379
 REDIS_PASSWORD=your_redis_password
@@ -54,166 +42,120 @@ REDIS_DB=10
 REDIS_CONNECT_TIMEOUT=5000
 ```
 
-### Required Environment Variables
-
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `POSTGRES_URL` | PostgreSQL connection string | - | ✅ |
-| `REDIS_HOST` | Redis server host | - | ✅ |
-| `REDIS_PORT` | Redis server port | - | ✅ |
-| `REDIS_PASSWORD` | Redis authentication password | - | ✅ |
-| `REDIS_DB` | Redis database number | 10 | ❌ |
-| `REDIS_CONNECT_TIMEOUT` | Redis connection timeout (ms) | 5000 | ❌ |
-
-## 🗄️ Database Setup
-
-1. Ensure PostgreSQL is running and accessible
-2. Create a database for the application
-3. Run database migrations:
+3. 🗄 Migrasi Database
+	 - Jalankan migrasi untuk membuat skema database:
 ```bash
 bun run drizzle-kit generate
 bun run drizzle-kit migrate
 ```
 
-### Database Schema
-
-The application includes a logging system with the following table structure:
-
-- **logs**: Stores application logs with levels, messages, and metadata
-  - `id`: Auto-incrementing primary key
-  - `timestamp`: Log creation timestamp
-  - `level`: Log level (e.g., info, error, debug)
-  - `message`: Log message content
-  - `metadata`: Additional JSON metadata
-
-## 🏃‍♂️ Development
-
-### Start Development Server
-
+4. Pengembangan
+	 - Jalankan server dalam mode pengembangan:
 ```bash
-bun run dev
+bun  dev
+```
+Server akan berjalan dengan hot-reload dan tersedia di `http://localhost:3000`.
+
+5. Pengujian
+	 - Jalankan pengujian unit:
+```bash
+bun test
 ```
 
-The server will start with hot-reload enabled and be available at `http://localhost:3000`.
+## 📦 Docker (Opsional)
+Menggunakan Docker Compose (Direkomendasikan)
 
-### Available Scripts
-
-| Script | Description |
-|--------|-------------|
-| `bun run dev` | Start development server with hot-reload |
-| `bun run test` | Run test suite |
-
-## 🐳 Docker Deployment
-
-### Using Docker Compose (Recommended)
-
-1. Copy the example docker-compose file:
+1. Salin file contoh docker-compose:
 ```bash
 cp docker-compose.example.yml docker-compose.yml
 ```
-
-2. Update the configuration in `docker-compose.yml` as needed
-
-3. Build and start the services:
+2. Sesuaikan konfigurasi di `docker-compose.yml` sesuai kebutuhan Anda.
+3. Jalankan Docker Compose:
 ```bash
-docker-compose up -d --build
+docker-compose up -d
 ```
 
-### Using Docker directly
-
-1. Build the Docker image:
-```bash
-docker build -t elysia-gateway .
-```
-
-2. Run the container:
-```bash
-docker run -d \
-  --name elysia-gateway \
-  --env-file .env \
-  -p 3000:3000 \
-  elysia-gateway
-```
-
-## 📁 Project Structure
+## Struktur Proyek
 
 ```
 elysia-starting-template/
-├── src/
-│   ├── database/
-│   │   ├── drizle/
-│   │   │   └── schema/
-│   │   │       └── index.ts      # Database schemas
-│   │   └── index.ts              # Database connection & config
-│   ├── log/
-│   │   └── log.listener.ts       # Logging event handler
-│   └── index.ts                  # Application entry point
-├── utils/                        # Utility functions
-├── drizzle/                      # Database migrations
-├── drizzle.config.ts             # Drizzle ORM configuration
-├── Dockerfile                    # Docker image configuration
-├── docker-compose.example.yml    # Docker Compose example
-└── package.json                  # Project dependencies
+├── src
+│   ├── database
+│   ├── index.test.ts
+│   ├── index.ts
+│   └── routes.ts
+├── tsconfig.json
+├── utils
+│    ├── configs
+│    ├── helpers
+│    ├── plugins
+│    └── types
+├── package.json
+├── README.md
+├── bun.lockb
+├── docker-compose.example.yml
+├── Dockerfile
+└── drizzle.config.ts
 ```
 
-## 🔧 Features
+# Fitur
 
-### Database Integration
-- **PostgreSQL** with Drizzle ORM for type-safe database operations
-- **Connection pooling** and health checks
-- **Automatic reconnection** on connection failures
+### Integrasi Database
+- **PostgreSQL** dengan Drizzle ORM untuk operasi database yang aman tipe
+- **Pooling koneksi** dan pemeriksaan kesehatan
+- **Rekoneksi otomatis** saat koneksi gagal
 
 ### Caching
-- **Redis integration** for high-performance caching
-- **Connection monitoring** with automatic recovery
-- **Configurable timeout** and database selection
+- **Integrasi Redis** untuk caching performa tinggi
+- **Monitoring koneksi** dengan pemulihan otomatis
+- **Timeout yang dapat dikonfigurasi** dan pemilihan database
 
-### Logging System
-- **Event-driven logging** with structured metadata
-- **Database persistence** for log entries
-- **Multiple log levels** support (info, error, debug, etc.)
+### Sistem Logging
+- **Logging berbasis event** dengan metadata terstruktur
+- **Penyimpanan log di database**
+- **Dukungan multi-level log** (info, error, debug, dll.)
 
-### Health Monitoring
-- **Database ping** every 30 seconds
-- **Redis connectivity** monitoring
-- **Automatic reconnection** on failures
+### Monitoring Kesehatan
+- **Ping database** setiap 30 detik
+- **Monitoring konektivitas Redis**
+- **Rekoneksi otomatis** saat terjadi kegagalan
 
-### API Documentation
-- **Swagger integration** for API documentation
-- **CORS support** for cross-origin requests
+### Dokumentasi API
+- **Integrasi Swagger** untuk dokumentasi API
+- **Dukungan CORS** untuk permintaan lintas asal
 
-## 🔍 Health Checks
+## 🔍 Pemeriksaan Kesehatan
 
-The application includes built-in health monitoring:
+Aplikasi ini memiliki monitoring kesehatan bawaan:
 
-- **Database Health**: Pings PostgreSQL every 30 seconds
-- **Redis Health**: Monitors Redis connectivity with automatic reconnection
-- **Logs**: Health check results are logged to console
+- **Kesehatan Database**: Melakukan ping ke PostgreSQL setiap 30 detik
+- **Kesehatan Redis**: Memantau konektivitas Redis dengan rekoneksi otomatis
+- **Log**: Hasil pemeriksaan kesehatan dicatat ke konsol
 
-## 🤝 Contributing
+## 🤝 Kontribusi
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork repositori ini.
+2. Buat branch fitur (`git checkout -b fitur/fitur-luar-biasa`).
+3. Commit perubahan Anda (`git commit -m 'Menambahkan fitur luar biasa'`).
+4. Push ke branch (`git push origin fitur/fitur-luar-biasa`).
+5. Buka Pull Request.
 
-## 📝 License
+## 📝 Lisensi
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Proyek ini dilisensikan di bawah Lisensi MIT - lihat file [LICENSE](LICENSE) untuk detailnya.
 
-## 🆘 Support
+## 🆘 Dukungan
 
-If you encounter any issues or have questions:
+Jika Anda mengalami masalah atau memiliki pertanyaan:
 
-1. Check the [Issues](../../issues) page
-2. Create a new issue with detailed information
-3. Include environment details and error logs
+1. Periksa halaman [Issues](../../issues).
+2. Buat issue baru dengan informasi yang detail.
+3. Sertakan detail lingkungan dan log error.
 
-## 🔄 Version
+## 🔄 Versi
 
-Current version: 1.0.50
+Versi saat ini: 1.0.50
 
 ---
 
-**Made with ❤️ using Elysia.js and Bun**
+**Dibuat dengan ❤️ menggunakan Elysia.js dan Bun
