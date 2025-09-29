@@ -5,7 +5,7 @@ import { routes } from './routes';
 routes
 	.use(
 		swagger({
-			path: '/docs',
+			path: '/dokumentasi',
 			documentation: {
 				components: {
 					securitySchemes: {

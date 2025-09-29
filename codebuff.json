@@ -1,0 +1,12 @@
+{
+  "description": "Template configuration for this project. See https://www.codebuff.com/config for all options.",
+  "startupProcesses": [
+    {
+      "name": "dev",
+      "command": "bun dev",
+      "enabled": true,
+      "stdoutFile": "logs/dev.log"
+    }
+  ],
+  "fileChangeHooks": []
+}
