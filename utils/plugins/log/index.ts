@@ -1,8 +1,6 @@
 import { Elysia } from 'elysia';
 import { getClientIP } from '../../helpers/ip';
 import { LOG } from './helper';
-import { Config } from '~/utils/configs';
-const timeZone = Config.App.env('TZ', 'Asia/Jakarta');
 
 export const logPlugin = new Elysia({
 	name: 'LOG',
@@ -21,8 +19,8 @@ export const logPlugin = new Elysia({
 	.macro({
 		createIncominReq: ({ external, message }: APP.LOG.Incoming) => {
 			return {
-				transform: async ({ request, body, query }) => {
-					const ip = getClientIP(request.headers);
+				transform: async ({ request, body, query, server }) => {
+					const ip = getClientIP(request, server);
 					const msg = `${request.method} :: ${request.url} :: ${ip} :: ${message || `Incoming Request`}`;
 
 					if (external) {

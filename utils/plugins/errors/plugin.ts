@@ -1,8 +1,8 @@
 import { Elysia } from 'elysia';
 import { HttpException, ValidationException } from './exception';
 import { ErrorHanlder, parseStackTrace } from './helper';
-import { Config } from '~/utils/configs';
 import { LOG } from '../log/helper';
+import { isProduction } from '~/utils/configs';
 const timeZone = 'Asia/Jakarta';
 
 export const errorPlugin = new Elysia({
@@ -40,13 +40,9 @@ export const errorPlugin = new Elysia({
 
 			default:
 				const messageError = (error as any)?.['message'] || 'Internal server error';
-				console.error(messageError);
-				LOG.createExternal({
-					level: 'error',
-					message: messageError,
-				});
+				console.error({ error });
 				return {
-					message: Config.App.isProduction ? 'Internal server error' : messageError,
+					message: isProduction ? 'Internal server error' : messageError,
 				};
 		}
 	});

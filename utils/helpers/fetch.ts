@@ -5,6 +5,7 @@ export const fetchWithTimeout = async (url: string, options: RequestInit = {}, t
 	const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
 	try {
+		console.log({ url });
 		const response = await fetch(url, {
 			...options,
 			signal: controller.signal,

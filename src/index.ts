@@ -1,6 +1,6 @@
 import swagger from '@elysiajs/swagger';
-import { Config } from '../utils/configs';
 import { routes } from './routes';
+import { port } from '~/utils/configs';
 
 routes
 	.use(
@@ -18,4 +18,4 @@ routes
 	.onStart(({ server }) => {
 		console.log(`🦊 Elysia is running at http://${server?.hostname}:${server?.port}`);
 	})
-	.listen(+Config.App.env('PORT', '3000'));
+	.listen(+port);

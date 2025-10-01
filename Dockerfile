@@ -30,6 +30,7 @@ COPY --from=install /temp/prod/node_modules ./node_modules
 COPY --from=prerelease /app/src ./src
 COPY --from=prerelease /app/utils ./utils
 COPY --from=prerelease /app/package.json .
+COPY --from=prerelease /app/tsconfig.json .
 
 # run the app
 USER bun

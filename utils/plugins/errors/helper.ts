@@ -1,4 +1,4 @@
-import { Config } from '~/utils/configs';
+import AppConfig, { timeZone } from '~/utils/configs';
 import { eventEmitter } from '~/utils/plugins/event';
 
 export const parseStackTrace = (stack: string = '') => {
@@ -36,9 +36,7 @@ export abstract class ErrorHanlder {
 				return acc;
 			}, {});
 
-			const timeZone = Config.App.env('TIMEZONE', 'Asia/Jakarta');
-
-			const timestamp = new Date().toLocaleString('id-ID', { timeZone }).replace(', ', ' ').replaceAll('.', ':');
+			const timestamp = new Date().toLocaleString('id-ID', { timeZone: AppConfig.timeZone }).replace(', ', ' ').replaceAll('.', ':');
 
 			console.error(`${timestamp} :: ${method} :: ${path} :: ${JSON.stringify(formattedErrors)}`);
 

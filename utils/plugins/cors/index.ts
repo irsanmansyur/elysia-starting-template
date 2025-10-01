@@ -1,10 +1,9 @@
 import cors from '@elysiajs/cors';
-import { Config } from '~/utils/configs';
-const allowedOrigins = Config.App.env('ALLOWED_ORIGINS', '').split(',');
+import { allowedOrigins, isProduction } from '~/utils/configs';
 
 export const corsPluging = cors({
 	origin: (req) => {
-		if (!Config.App.isProduction) return true;
+		if (!isProduction) return true;
 
 		const originHeader = typeof req === 'string' ? req : req?.headers?.get?.('origin');
 

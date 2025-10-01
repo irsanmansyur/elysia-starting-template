@@ -38,4 +38,5 @@ declare namespace APP {
 			meta?: Record<string, any>;
 		};
 	}
+	type TTL = `${number}s` | `${number}m` | `${number}h` | `${number}d`;
 }
