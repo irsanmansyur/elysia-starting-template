@@ -97,6 +97,7 @@ export const throttlePluging =
 				if (cleanupInterval) clearInterval(cleanupInterval);
 			})
 			.onRequest(({ request, set, server }) => {
+				if (request.url == 'http://e.ly/dokumentasi') return;
 				const pathname = new URL(request.url).pathname;
 				const ip = getClientIP(request, server);
 				const clientThrottle = ThrolettleStore.get(ip);
