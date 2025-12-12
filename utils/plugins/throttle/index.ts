@@ -97,6 +97,7 @@ export const throttlePluging =
         if (cleanupInterval) clearInterval(cleanupInterval);
       })
       .onRequest(({ request, set, server }) => {
+        if (request.url.includes("sw.js")) return;
         if (request.url === "http://e.ly/dokumentasi") return;
         const pathname = new URL(request.url).pathname;
         const ip = getClientIP(request, server);
@@ -129,9 +130,7 @@ export const throttlePluging =
 
           throw new HttpException("Too Many Requests", 429);
         }
-
         set.headers["X-RateLimit-Remaining"] = (hits.limit - clientThrottle.hits.limit).toString();
-
         clientThrottle.hits.limit += 1;
       })
       .as("global");
